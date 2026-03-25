@@ -1,12 +1,11 @@
 {
   "name": "Обучение на парикмахера — Анастасия Гришина",
   "short_name": "Курс Парикмахер",
-  "description": "Авторский курс + наставничество по парикмахерскому делу во Владивостоке",
+  "description": "Авторский курс + наставничество по парикмахерскому делу",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#cdc4bb",
-  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/icon-192.png",
