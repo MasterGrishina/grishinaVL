@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
     
-    <!-- PWA -->
+    <!-- PWA настройки (исправленные) -->
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#cdc4bb">
-    <link rel="apple-touch-icon" href="/icon-192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/icon-192.png" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="https://274418.selcdn.ru/cv08300-33250f0d-0664-43fc-9dbf-9d89738d114e/images/62828/f44bc6a9bb0214239dba6cb2fa2c4db7.ico">
@@ -251,7 +252,7 @@
         showSlide(0);
     }
 
-    // Правильная функция выбора уровня
+    // Выбор уровня (исправлено)
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         const encoded = encodeURIComponent(message);
