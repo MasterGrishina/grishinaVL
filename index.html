@@ -12,20 +12,52 @@
         
         .level-card {
             transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
         
         .level-card:hover {
             transform: scale(1.05);
             box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-            z-index: 10;
         }
         
         .levels-container:hover .level-card:not(:hover) {
-            opacity: 0.65;
-            filter: brightness(0.95);
+            opacity: 0.68;
+        }
+        
+        .want-btn {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .level-card:hover .want-btn {
+            opacity: 1;
         }
         
         .accent { color: #cdc4bb; }
+        
+        /* Слайдшоу */
+        .slideshow {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55));
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -36,26 +68,35 @@
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
         
         <a href="https://t.me/grishina_style" target="_blank"
-           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[200px]">
+           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[210px] text-center">
             Записаться на курс
         </a>
     </div>
 </header>
 
-<!-- ГЕРОЙ -->
-<section class="bg-gradient-to-br from-[#cdc4bb] to-[#b8a99a] text-white py-24">
-    <div class="max-w-5xl mx-auto px-6 text-center">
-        <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+<!-- ГЕРОЙ с автослайдшоу -->
+<section class="relative h-screen flex items-center text-white">
+    <div class="slideshow absolute inset-0" id="slideshow">
+        <!-- Фото будут загружены через JS -->
+        <div class="slide active" style="background-image: url('slide1.jpg');"></div>
+        <div class="slide" style="background-image: url('slide2.jpg');"></div>
+        <div class="slide" style="background-image: url('slide3.jpg');"></div>
+        <div class="slide" style="background-image: url('slide4.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-8">
             Обучение на парикмахера<br>
             <span class="text-4xl md:text-5xl">Авторский курс + Наставничество</span>
         </h1>
-        <p class="text-2xl md:text-3xl max-w-3xl mx-auto mb-10">
-            • 4 уровня • 
+        <div class="text-2xl md:text-3xl max-w-3xl mx-auto leading-relaxed">
+            • 4 уровня •<br>
             Начинай зарабатывать уже после первого уровня<br>
             Владивосток, ул. Русская, 71
-        </p>
+        </div>
         <a href="https://t.me/grishina_style" target="_blank"
-           class="inline-block bg-white text-[#cdc4bb] px-12 py-6 rounded-2xl text-2xl font-bold hover:scale-105 transition">
+           class="mt-12 inline-block bg-white text-[#cdc4bb] px-12 py-6 rounded-2xl text-2xl font-bold hover:scale-105 transition">
             Записаться сейчас →
         </a>
     </div>
@@ -69,10 +110,11 @@
         
         <h2 class="text-3xl font-bold mb-6">Анастасия Гришина</h2>
         <div class="text-xl text-gray-700 max-w-2xl mx-auto space-y-4">
-            <p>• Руководитель студии красоты •</p>
-            <p>• Технолог бренда Ph_laboratories (Италия) •</p>
-            <p>• Участник команды стилистов ВЭФ 2024-2025 •</p>
-            <p>• Победитель конкурса колористов Coloreast 2025 •</p>
+            <p>• Руководитель студии красоты</p>
+            <p>• Технолог бренда Ph_laboratories (Италия)</p>
+            <p>• Преподаватель ВВГУ</p>
+            <p>• Участник команды стилистов ВЭФ 2024-2025</p>
+            <p>• Победитель конкурса колористов Coloreast 2025</p>
         </div>
     </div>
 </section>
@@ -94,6 +136,7 @@
                     <li>✅ Укладки весна-лето 2026</li>
                 </ul>
                 <div class="mt-8 text-3xl font-bold accent">18 500 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 bg-[#cdc4bb] text-white px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
             </div>
 
             <div onclick="selectLevel(2)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
@@ -106,6 +149,7 @@
                     <li>✅ Кислая смывка и нейтрализация</li>
                 </ul>
                 <div class="mt-8 text-3xl font-bold accent">27 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 bg-[#cdc4bb] text-white px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
             </div>
 
             <div onclick="selectLevel(3)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
@@ -118,6 +162,7 @@
                     <li>✅ Тонирование и смывка</li>
                 </ul>
                 <div class="mt-8 text-3xl font-bold accent">35 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 bg-[#cdc4bb] text-white px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
             </div>
 
             <div onclick="selectLevel(4)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
@@ -129,6 +174,7 @@
                     <li>✅ 3 базовые коммерческие формы</li>
                 </ul>
                 <div class="mt-8 text-3xl font-bold accent">35 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 bg-[#cdc4bb] text-white px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
             </div>
         </div>
 
@@ -144,17 +190,19 @@
         <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
         <div class="grid md:grid-cols-3 gap-10">
             <div class="text-center">
-                <div class="text-6xl mb-4">📚</div>
-                <h3 class="font-semibold text-xl">Фирменная тетрадь + сертификат</h3>
+                <div class="text-6xl mb-6">📚</div>
+                <h3 class="font-semibold text-xl mb-3">Фирменная тетрадь и именной сертификат</h3>
+                <p class="text-gray-600">Все записи и схемы останутся у тебя, а сертификат подтвердит уровень мастерства</p>
             </div>
             <div class="text-center">
-                <div class="text-6xl mb-4">🛠️</div>
-                <h3 class="font-semibold text-xl">Всё включено</h3>
-                <p class="text-gray-600 mt-2">Расходные материалы и инструменты</p>
+                <div class="text-6xl mb-6">🛠️</div>
+                <h3 class="font-semibold text-xl mb-3">Всё необходимое включено</h3>
+                <p class="text-gray-600">Профессиональные краски, инструменты и расходные материалы — ничего докупать не нужно</p>
             </div>
             <div class="text-center">
-                <div class="text-6xl mb-4">👥</div>
-                <h3 class="font-semibold text-xl">Модели + практика</h3>
+                <div class="text-6xl mb-6">👥</div>
+                <h3 class="font-semibold text-xl mb-3">Практика на реальных моделях</h3>
+                <p class="text-gray-600">Работа под моим личным контролем + живые модели на каждом занятии</p>
             </div>
         </div>
     </div>
@@ -173,6 +221,23 @@
 </footer>
 
 <script>
+    // Автослайдшоу
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[index].classList.add('active');
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    setInterval(nextSlide, 5000); // смена каждые 5 секунд
+    
+    // Клик по уровням
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         const encoded = encodeURIComponent(message);
