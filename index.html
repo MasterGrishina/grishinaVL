@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#cdc4bb">
+    <link rel="apple-touch-icon" href="/icon-192.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="https://274418.selcdn.ru/cv08300-33250f0d-0664-43fc-9dbf-9d89738d114e/images/62828/f44bc6a9bb0214239dba6cb2fa2c4db7.ico">
     <style>
@@ -248,6 +251,15 @@
         const encoded = encodeURIComponent(message);
         window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
     }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('Service Worker зарегистрирован', reg))
+        .catch(err => console.log('Service Worker ошибка', err));
+    });
+  }
 </script>
 </body>
 </html>
