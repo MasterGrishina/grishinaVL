@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
     
-    <!-- === ИСПРАВЛЕНИЯ ДЛЯ IPHONE И SAFARI (самое важное) === -->
-    <link rel="apple-touch-icon" href="/touch-icon-180.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+    <!-- Иконки — максимально для iPhone/Safari -->
+    <link rel="apple-touch-icon" href="/touchicon.png?v=20260325">
+    <link rel="apple-touch-icon" sizes="180x180" href="/touchicon.png?v=20260325">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon192.png?v=20260325">
     
-    <!-- Favicon для вкладки браузера -->
-    <link rel="icon" href="/icon-192.png" type="image/png">
+    <link rel="icon" href="/icon192.png?v=20260325" type="image/png">
     <meta name="theme-color" content="#cdc4bb">
-    
-    <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.webmanifest">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -28,59 +25,43 @@
             position: relative;
             overflow: hidden;
         }
-        .level-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        }
-        .levels-container:hover .level-card:not(:hover) {
-            opacity: 0.68;
-        }
-        .want-btn {
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        .level-card:hover .want-btn {
-            opacity: 1;
-        }
+        .level-card:hover { transform: scale(1.05); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
+        .levels-container:hover .level-card:not(:hover) { opacity: 0.68; }
+        .want-btn { opacity: 0; transition: all 0.3s ease; }
+        .level-card:hover .want-btn { opacity: 1; }
         .accent { color: #cdc4bb; }
         
-        /* Слайдшоу */
         .slideshow { position: relative; height: 100%; overflow: hidden; }
-        .slide { 
-            position: absolute; 
-            inset: 0; 
-            background-size: cover; 
-            background-position: center; 
-            opacity: 0; 
-            transition: opacity 1.2s ease; 
-        }
+        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
         .slide.active { opacity: 1; }
-        .hero-overlay { 
-            position: absolute; 
-            inset: 0; 
-            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); 
-        }
-        .author-line { 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
+        .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Исправление кнопки в шапке на мобильных */
+        .header-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-width: 200px;
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-<!-- 1. ШАПКА -->
+<!-- ШАПКА -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
+        
         <a href="https://t.me/grishina_style" target="_blank"
-           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[210px]">
+           class="header-button bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-8 py-3 rounded-full font-semibold transition text-base">
             Записаться на курс
         </a>
     </div>
 </header>
 
-<!-- 2. ГЕРОЙ -->
+<!-- ГЕРОЙ -->
 <section class="relative h-screen flex items-center text-white">
     <div class="slideshow absolute inset-0" id="slideshow">
         <div class="slide active" style="background-image: url('slide1.jpg');"></div>
@@ -107,7 +88,7 @@
     </div>
 </section>
 
-<!-- 3. ОБ АВТОРЕ -->
+<!-- ОБ АВТОРЕ -->
 <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <img src="photo.jpg" alt="Анастасия Гришина" 
@@ -117,12 +98,12 @@
             <p class="author-line">• Руководитель студии красоты •</p>
             <p class="author-line">• Технолог бренда Ph_laboratories •</p>
             <p class="author-line">• Участник команды стилистов ВЭФ •</p>
-            <p class="author-line">• Победитель конкурса колористов •</p>
+            <p class="author-line">• Победитель конкурса колористов Coloreast •</p>
         </div>
     </div>
 </section>
 
-<!-- 4. ПРЕИМУЩЕСТВА -->
+<!-- ПРЕИМУЩЕСТВА -->
 <section class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
@@ -146,11 +127,12 @@
     </div>
 </section>
 
-<!-- 5. 4 УРОВНЯ -->
+<!-- 4 УРОВНЯ -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
         <div class="levels-container grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- уровни 1-4 без изменений, как раньше -->
             <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
                 <div class="accent text-5xl font-bold mb-2">01</div>
                 <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
@@ -208,7 +190,7 @@
     </div>
 </section>
 
-<!-- 6. ФУТЕР -->
+<!-- ФУТЕР -->
 <footer class="bg-[#181818] text-white py-12 text-center">
     <div class="max-w-7xl mx-auto px-6">
         <p class="text-xl mb-6">Анастасия Гришина • Авторский курс парикмахера</p>
@@ -237,7 +219,6 @@
         showSlide(0);
     }
 
-    // Выбор уровня
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
