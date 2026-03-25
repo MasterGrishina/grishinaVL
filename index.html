@@ -235,7 +235,7 @@
     
     function showSlide(index) {
         slides.forEach(slide => slide.classList.remove('active'));
-        slides[index].classList.add('active');
+        if (slides[index]) slides[index].classList.add('active');
     }
     
     function nextSlide() {
@@ -243,13 +243,16 @@
         showSlide(currentSlide);
     }
     
-    setInterval(nextSlide, 5000);
-    
-    // Клик по уровням
+    if (slides.length > 0) {
+        setInterval(nextSlide, 5000);
+        showSlide(0); // показываем первый слайд сразу
+    }
+
+    // Клик по уровням — ИСПРАВЛЕНО
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        const encoded = encodeURIComponent(message);
-        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://t.me/grishina_style?text=${encodedMessage}`, '_blank');
     }
 </script>
 <script>
