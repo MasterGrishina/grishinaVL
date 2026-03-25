@@ -9,8 +9,22 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-        .level-card { transition: all 0.4s ease; }
-        .level-card:hover { transform: scale(1.04); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        
+        .level-card {
+            transition: all 0.4s ease;
+        }
+        
+        .level-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+            z-index: 10;
+        }
+        
+        .levels-container:hover .level-card:not(:hover) {
+            opacity: 0.65;
+            filter: brightness(0.95);
+        }
+        
         .accent { color: #cdc4bb; }
     </style>
 </head>
@@ -21,13 +35,10 @@
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
         
-        <!-- Кнопка по центру -->
         <a href="https://t.me/grishina_style" target="_blank"
-           class="absolute left-1/2 -translate-x-1/2 bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg">
+           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[200px]">
             Записаться на курс
         </a>
-        
-        <div class="w-28"></div> <!-- пустой блок для баланса -->
     </div>
 </header>
 
@@ -52,24 +63,27 @@
 <!-- ОБ АВТОРЕ -->
 <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
-        <!-- Сюда вставляется твоё фото -->
         <img src="photo.jpg" alt="Анастасия Гришина" 
-             class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-6">
+             class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-8">
         
-        <h2 class="text-3xl font-bold mb-4">Анастасия Гришина</h2>
-        <p class="text-xl text-gray-700 max-w-2xl mx-auto">
-            Руководитель студии красоты • Технолог бренда Ph_laboratories (Италия) •<br>
-            Преподаватель ВВГУ • Участник команды стилистов ВЭФ • Победитель Coloreast 2025
-        </p>
+        <h2 class="text-3xl font-bold mb-6">Анастасия Гришина</h2>
+        <div class="text-xl text-gray-700 max-w-2xl mx-auto space-y-4">
+            <p>• Руководитель студии красоты</p>
+            <p>• Технолог бренда Ph_laboratories (Италия)</p>
+            <p>• Преподаватель ВВГУ</p>
+            <p>• Участник команды стилистов ВЭФ 2024-2025</p>
+            <p>• Победитель конкурса колористов Coloreast 2025</p>
+        </div>
     </div>
 </section>
 
-<!-- 4 УРОВНЯ (интерактивные) -->
+<!-- 4 УРОВНЯ -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-
+        
+        <div class="levels-container grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
             <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
                 <div class="accent text-5xl font-bold mb-2">01</div>
                 <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
@@ -117,7 +131,8 @@
                 <div class="mt-8 text-3xl font-bold accent">35 000 ₽</div>
             </div>
         </div>
-        <p class="text-center mt-10 text-lg font-medium accent">
+
+        <p class="text-center mt-12 text-lg font-medium accent">
             При прохождении 2 и более уровней — скидка 10%
         </p>
     </div>
@@ -127,7 +142,7 @@
 <section class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
-        <div class="grid md:grid-cols-3 gap-8">
+        <div class="grid md:grid-cols-3 gap-10">
             <div class="text-center">
                 <div class="text-6xl mb-4">📚</div>
                 <h3 class="font-semibold text-xl">Фирменная тетрадь + сертификат</h3>
@@ -135,28 +150,13 @@
             <div class="text-center">
                 <div class="text-6xl mb-4">🛠️</div>
                 <h3 class="font-semibold text-xl">Всё включено</h3>
-                <p class="text-gray-600">Расходные материалы и инструменты</p>
+                <p class="text-gray-600 mt-2">Расходные материалы и инструменты</p>
             </div>
             <div class="text-center">
                 <div class="text-6xl mb-4">👥</div>
                 <h3 class="font-semibold text-xl">Модели + практика</h3>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- ФОРМА ЗАЯВКИ -->
-<section class="py-20 bg-white">
-    <div class="max-w-xl mx-auto px-6">
-        <h2 class="text-3xl font-bold text-center mb-10">Оставить заявку</h2>
-        <form id="form" class="space-y-6">
-            <input type="text" id="name" placeholder="Имя" class="w-full px-6 py-5 border rounded-2xl text-lg">
-            <input type="tel" id="phone" placeholder="Телефон" class="w-full px-6 py-5 border rounded-2xl text-lg">
-            <button onclick="sendApplication()" type="button"
-                    class="w-full bg-[#cdc4bb] hover:bg-[#b8a99a] text-white py-7 rounded-2xl text-2xl font-semibold">
-                Отправить заявку
-            </button>
-        </form>
     </div>
 </section>
 
@@ -175,13 +175,6 @@
 <script>
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        const encoded = encodeURIComponent(message);
-        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
-    }
-
-    function sendApplication() {
-        const name = document.getElementById('name').value || 'Клиент';
-        const message = `Добрый день! Меня зовут ${name}. Хотелось бы записаться на обучение на парикмахера.`;
         const encoded = encodeURIComponent(message);
         window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
     }
