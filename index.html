@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
     
-    <!-- PWA настройки (исправленные) -->
+    <!-- === PWA для iPhone и Safari (самое важное) === -->
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#cdc4bb">
+    
+    <!-- Специально для iOS / iPhone -->
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
+    
+    <!-- Обычный favicon -->
     <link rel="icon" href="/icon-192.png" type="image/png">
     
     <script src="https://cdn.tailwindcss.com"></script>
@@ -18,60 +24,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
-        .level-card {
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .level-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        }
-        
-        .levels-container:hover .level-card:not(:hover) {
-            opacity: 0.68;
-        }
-        
-        .want-btn {
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-        
-        .level-card:hover .want-btn {
-            opacity: 1;
-        }
-        
+        .level-card { transition: all 0.4s ease; position: relative; overflow: hidden; }
+        .level-card:hover { transform: scale(1.05); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
+        .levels-container:hover .level-card:not(:hover) { opacity: 0.68; }
+        .want-btn { opacity: 0; transition: all 0.3s ease; }
+        .level-card:hover .want-btn { opacity: 1; }
         .accent { color: #cdc4bb; }
         
-        /* Слайдшоу */
-        .slideshow {
-            position: relative;
-            height: 100%;
-            overflow: hidden;
-        }
-        .slide {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 1.2s ease;
-        }
-        .slide.active {
-            opacity: 1;
-        }
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55));
-        }
-        
-        .author-line {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .slideshow { position: relative; height: 100%; overflow: hidden; }
+        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
+        .slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
+        .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -233,30 +197,25 @@
 </footer>
 
 <script>
-    // Автослайдшоу
+    // Автослайдшоу + выбор уровня (исправлено)
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
-    
     function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
+        slides.forEach(s => s.classList.remove('active'));
         if (slides[index]) slides[index].classList.add('active');
     }
-    
     function nextSlide() {
         currentSlide = (currentSlide + 1) % slides.length;
         showSlide(currentSlide);
     }
-    
     if (slides.length > 0) {
         setInterval(nextSlide, 5000);
         showSlide(0);
     }
 
-    // Выбор уровня (исправлено)
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        const encoded = encodeURIComponent(message);
-        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
+        window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
     }
 </script>
 </body>
