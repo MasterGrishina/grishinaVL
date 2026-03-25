@@ -5,37 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
     
-    <!-- === PWA для iPhone и Safari (самое важное) === -->
-    <link rel="manifest" href="/manifest.webmanifest">
-    <meta name="theme-color" content="#cdc4bb">
-    
-    <!-- Специально для iOS / iPhone -->
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <!-- === ИСПРАВЛЕНИЯ ДЛЯ IPHONE И SAFARI (самое важное) === -->
+    <link rel="apple-touch-icon" href="/touch-icon-180.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/touch-icon-180.png">
     <link rel="apple-touch-icon" sizes="192x192" href="/icon-192.png">
     
-    <!-- Обычный favicon -->
+    <!-- Favicon для вкладки браузера -->
     <link rel="icon" href="/icon-192.png" type="image/png">
+    <meta name="theme-color" content="#cdc4bb">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.webmanifest">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="https://274418.selcdn.ru/cv08300-33250f0d-0664-43fc-9dbf-9d89738d114e/images/62828/f44bc6a9bb0214239dba6cb2fa2c4db7.ico">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
-        .level-card { transition: all 0.4s ease; position: relative; overflow: hidden; }
-        .level-card:hover { transform: scale(1.05); box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25); }
-        .levels-container:hover .level-card:not(:hover) { opacity: 0.68; }
-        .want-btn { opacity: 0; transition: all 0.3s ease; }
-        .level-card:hover .want-btn { opacity: 1; }
+        .level-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .level-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        .levels-container:hover .level-card:not(:hover) {
+            opacity: 0.68;
+        }
+        .want-btn {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .level-card:hover .want-btn {
+            opacity: 1;
+        }
         .accent { color: #cdc4bb; }
         
+        /* Слайдшоу */
         .slideshow { position: relative; height: 100%; overflow: hidden; }
-        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
+        .slide { 
+            position: absolute; 
+            inset: 0; 
+            background-size: cover; 
+            background-position: center; 
+            opacity: 0; 
+            transition: opacity 1.2s ease; 
+        }
         .slide.active { opacity: 1; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
-        .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hero-overlay { 
+            position: absolute; 
+            inset: 0; 
+            background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); 
+        }
+        .author-line { 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -44,15 +73,14 @@
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
-        
         <a href="https://t.me/grishina_style" target="_blank"
-           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[210px] text-center">
+           class="bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg flex items-center justify-center min-w-[210px]">
             Записаться на курс
         </a>
     </div>
 </header>
 
-<!-- 2. ГЕРОЙ с автослайдшоу -->
+<!-- 2. ГЕРОЙ -->
 <section class="relative h-screen flex items-center text-white">
     <div class="slideshow absolute inset-0" id="slideshow">
         <div class="slide active" style="background-image: url('slide1.jpg');"></div>
@@ -84,13 +112,12 @@
     <div class="max-w-4xl mx-auto px-6 text-center">
         <img src="photo.jpg" alt="Анастасия Гришина" 
              class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-8">
-        
         <h2 class="text-3xl font-bold mb-6">Анастасия Гришина</h2>
         <div class="text-xl text-gray-700 max-w-3xl mx-auto space-y-3">
             <p class="author-line">• Руководитель студии красоты •</p>
             <p class="author-line">• Технолог бренда Ph_laboratories •</p>
             <p class="author-line">• Участник команды стилистов ВЭФ •</p>
-            <p class="author-line">• Победитель конкурсов колористов •</p>
+            <p class="author-line">• Победитель конкурса колористов •</p>
         </div>
     </div>
 </section>
@@ -123,9 +150,7 @@
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
-        
         <div class="levels-container grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
             <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
                 <div class="accent text-5xl font-bold mb-2">01</div>
                 <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
@@ -177,7 +202,6 @@
                 <div class="want-btn absolute bottom-6 right-6 bg-[#cdc4bb] text-white px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
             </div>
         </div>
-
         <p class="text-center mt-12 text-lg font-medium accent">
             При прохождении 2 и более уровней — скидка 10%
         </p>
@@ -197,7 +221,7 @@
 </footer>
 
 <script>
-    // Автослайдшоу + выбор уровня (исправлено)
+    // Слайдшоу
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     function showSlide(index) {
@@ -213,6 +237,7 @@
         showSlide(0);
     }
 
+    // Выбор уровня
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
