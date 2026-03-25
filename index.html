@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
+    
+    <!-- PWA -->
     <link rel="manifest" href="/manifest.webmanifest">
     <meta name="theme-color" content="#cdc4bb">
     <link rel="apple-touch-icon" href="/icon-192.png">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="https://274418.selcdn.ru/cv08300-33250f0d-0664-43fc-9dbf-9d89738d114e/images/62828/f44bc6a9bb0214239dba6cb2fa2c4db7.ico">
+    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -62,7 +66,6 @@
             background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55));
         }
         
-        /* Без переносов в описании автора */
         .author-line {
             white-space: nowrap;
             overflow: hidden;
@@ -122,7 +125,7 @@
             <p class="author-line">• Руководитель студии красоты •</p>
             <p class="author-line">• Технолог бренда Ph_laboratories •</p>
             <p class="author-line">• Участник команды стилистов ВЭФ •</p>
-            <p class="author-line">• Победитель конкурсов колористов •</p>
+            <p class="author-line">• Победитель конкурса колористов Coloreast •</p>
         </div>
     </div>
 </section>
@@ -245,24 +248,15 @@
     
     if (slides.length > 0) {
         setInterval(nextSlide, 5000);
-        showSlide(0); // показываем первый слайд сразу
+        showSlide(0);
     }
 
-    // Клик по уровням — ИСПРАВЛЕНО
+    // Правильная функция выбора уровня
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://t.me/grishina_style?text=${encodedMessage}`, '_blank');
+        const encoded = encodeURIComponent(message);
+        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
     }
-</script>
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('Service Worker зарегистрирован', reg))
-        .catch(err => console.log('Service Worker ошибка', err));
-    });
-  }
 </script>
 </body>
 </html>
