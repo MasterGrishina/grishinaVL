@@ -10,7 +10,8 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         .level-card { transition: all 0.4s ease; }
-        .level-card:hover { transform: scale(1.03); }
+        .level-card:hover { transform: scale(1.04); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1); }
+        .accent { color: #cdc4bb; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -18,16 +19,20 @@
 <!-- ШАПКА -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-        <div class="text-2xl font-bold text-[#f88c74]">Анастасия Гришина</div>
+        <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
+        
+        <!-- Кнопка по центру -->
         <a href="https://t.me/grishina_style" target="_blank"
-           class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3 rounded-full font-semibold transition">
+           class="absolute left-1/2 -translate-x-1/2 bg-[#cdc4bb] hover:bg-[#b8a99a] text-white px-10 py-3 rounded-full font-semibold transition text-lg">
             Записаться на курс
         </a>
+        
+        <div class="w-28"></div> <!-- пустой блок для баланса -->
     </div>
 </header>
 
 <!-- ГЕРОЙ -->
-<section class="bg-gradient-to-br from-[#f88c74] to-[#e67a63] text-white py-24">
+<section class="bg-gradient-to-br from-[#cdc4bb] to-[#b8a99a] text-white py-24">
     <div class="max-w-5xl mx-auto px-6 text-center">
         <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
             Обучение на парикмахера<br>
@@ -38,7 +43,7 @@
             Владивосток, ул. Русская, 71
         </p>
         <a href="https://t.me/grishina_style" target="_blank"
-           class="inline-block bg-white text-[#f88c74] px-12 py-6 rounded-2xl text-2xl font-bold hover:scale-105 transition">
+           class="inline-block bg-white text-[#cdc4bb] px-12 py-6 rounded-2xl text-2xl font-bold hover:scale-105 transition">
             Записаться сейчас →
         </a>
     </div>
@@ -47,76 +52,73 @@
 <!-- ОБ АВТОРЕ -->
 <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
-        <div class="mx-auto w-32 h-32 bg-[#f88c74]/10 rounded-full flex items-center justify-center mb-6 text-6xl">👩‍🎨</div>
+        <!-- Сюда вставляется твоё фото -->
+        <img src="photo.jpg" alt="Анастасия Гришина" 
+             class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-6">
+        
         <h2 class="text-3xl font-bold mb-4">Анастасия Гришина</h2>
         <p class="text-xl text-gray-700 max-w-2xl mx-auto">
             Руководитель студии красоты • Технолог бренда Ph_laboratories (Италия) •<br>
-            Преподаватель ВВГУ • Участник команды стилистов ВЭФ 2024-2025 •<br>
-            Победитель конкурса колористов Coloreast 2025
+            Преподаватель ВВГУ • Участник команды стилистов ВЭФ • Победитель Coloreast 2025
         </p>
     </div>
 </section>
 
-<!-- 4 УРОВНЯ -->
+<!-- 4 УРОВНЯ (интерактивные) -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-            <!-- Уровень 1 -->
-            <div class="level-card bg-white p-8 rounded-3xl shadow">
-                <div class="text-[#f88c74] text-5xl font-bold mb-2">01</div>
+            <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="accent text-5xl font-bold mb-2">01</div>
                 <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
                 <p class="text-sm text-gray-500 mb-6">5 занятий × 4 часа</p>
                 <ul class="space-y-3 text-sm">
-                    <li>✅ Окрашивание тон в тон / седина / тонирование</li>
-                    <li>✅ Профессиональное мытьё + SPA-уходы</li>
-                    <li>✅ Укладки весна-лето 2026 (плойка, гофре, утюг)</li>
-                    <li>✅ Steam pod (бонус)</li>
+                    <li>✅ Окрашивание тон в тон / седина</li>
+                    <li>✅ Профессиональное мытьё + SPA</li>
+                    <li>✅ Укладки весна-лето 2026</li>
                 </ul>
-                <div class="mt-8 text-3xl font-bold text-[#f88c74]">18 500 ₽</div>
+                <div class="mt-8 text-3xl font-bold accent">18 500 ₽</div>
             </div>
 
-            <!-- Уровень 2 -->
-            <div class="level-card bg-white p-8 rounded-3xl shadow">
-                <div class="text-[#f88c74] text-5xl font-bold mb-2">02</div>
+            <div onclick="selectLevel(2)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="accent text-5xl font-bold mb-2">02</div>
                 <h3 class="text-2xl font-semibold mb-4">Профи</h3>
                 <p class="text-sm text-gray-500 mb-6">6 занятий × 4 часа</p>
                 <ul class="space-y-3 text-sm">
                     <li>✅ Фундамент колористики</li>
-                    <li>✅ Структура волос и кожи головы</li>
-                    <li>✅ Кислая смывка, пре-пигментация, нейтрализация</li>
+                    <li>✅ Структура волос</li>
+                    <li>✅ Кислая смывка и нейтрализация</li>
                 </ul>
-                <div class="mt-8 text-3xl font-bold text-[#f88c74]">27 000 ₽</div>
+                <div class="mt-8 text-3xl font-bold accent">27 000 ₽</div>
             </div>
 
-            <!-- Уровень 3 -->
-            <div class="level-card bg-white p-8 rounded-3xl shadow">
-                <div class="text-[#f88c74] text-5xl font-bold mb-2">03</div>
+            <div onclick="selectLevel(3)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="accent text-5xl font-bold mb-2">03</div>
                 <h3 class="text-2xl font-semibold mb-4">Эксперт</h3>
                 <p class="text-sm text-gray-500 mb-6">5 занятий × 5 часов</p>
                 <ul class="space-y-3 text-sm">
-                    <li>✅ Блонд тотал (натуральная и косметическая база)</li>
-                    <li>✅ Работа пудрой, 11 ряд, контуринг</li>
+                    <li>✅ Блонд тотал</li>
+                    <li>✅ Работа пудрой и контуринг</li>
                     <li>✅ Тонирование и смывка</li>
                 </ul>
-                <div class="mt-8 text-3xl font-bold text-[#f88c74]">35 000 ₽</div>
+                <div class="mt-8 text-3xl font-bold accent">35 000 ₽</div>
             </div>
 
-            <!-- Уровень 4 -->
-            <div class="level-card bg-white p-8 rounded-3xl shadow">
-                <div class="text-[#f88c74] text-5xl font-bold mb-2">04</div>
+            <div onclick="selectLevel(4)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="accent text-5xl font-bold mb-2">04</div>
                 <h3 class="text-2xl font-semibold mb-4">Маэстро</h3>
                 <p class="text-sm text-gray-500 mb-6">4 занятия × 5 часов</p>
                 <ul class="space-y-3 text-sm">
-                    <li>✅ Женские стрижки 2026 (3 базовые коммерческие формы)</li>
-                    <li>✅ Длинные / средние / короткие волосы</li>
+                    <li>✅ Женские стрижки 2026</li>
+                    <li>✅ 3 базовые коммерческие формы</li>
                 </ul>
-                <div class="mt-8 text-3xl font-bold text-[#f88c74]">35 000 ₽</div>
+                <div class="mt-8 text-3xl font-bold accent">35 000 ₽</div>
             </div>
         </div>
-        <p class="text-center mt-10 text-lg font-medium text-[#f88c74]">
-            При прохождении 2 и более уровней — скидка 10% на весь курс
+        <p class="text-center mt-10 text-lg font-medium accent">
+            При прохождении 2 и более уровней — скидка 10%
         </p>
     </div>
 </section>
@@ -129,43 +131,29 @@
             <div class="text-center">
                 <div class="text-6xl mb-4">📚</div>
                 <h3 class="font-semibold text-xl">Фирменная тетрадь + сертификат</h3>
-                <p class="text-gray-600">Именной сертификат после каждого уровня</p>
             </div>
             <div class="text-center">
                 <div class="text-6xl mb-4">🛠️</div>
                 <h3 class="font-semibold text-xl">Всё включено</h3>
-                <p class="text-gray-600">Расходные материалы и инструменты выдаю</p>
+                <p class="text-gray-600">Расходные материалы и инструменты</p>
             </div>
             <div class="text-center">
                 <div class="text-6xl mb-4">👥</div>
                 <h3 class="font-semibold text-xl">Модели + практика</h3>
-                <p class="text-gray-600">Работа на манекенах и живых моделях</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ЦЕНА И СТАРТ -->
-<section class="py-20 bg-[#f88c74] text-white">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-        <h2 class="text-4xl font-bold mb-8">Начни зарабатывать уже после первого уровня</h2>
-        <a href="https://t.me/grishina_style" target="_blank"
-           class="block bg-white text-[#f88c74] text-3xl font-bold py-8 rounded-3xl hover:scale-105 transition">
-            Записаться на курс в Telegram
-        </a>
-        <p class="mt-8 text-lg">Студия: ул. Русская 71, Владивосток<br>Индивидуально или в мини-группе (2–3 человека)</p>
-    </div>
-</section>
-
-<!-- ФОРМА -->
+<!-- ФОРМА ЗАЯВКИ -->
 <section class="py-20 bg-white">
     <div class="max-w-xl mx-auto px-6">
         <h2 class="text-3xl font-bold text-center mb-10">Оставить заявку</h2>
         <form id="form" class="space-y-6">
-            <input type="text" placeholder="Имя" class="w-full px-6 py-5 border rounded-2xl text-lg">
-            <input type="tel" placeholder="Телефон" class="w-full px-6 py-5 border rounded-2xl text-lg">
-            <button onclick="sendToTelegram()" type="button"
-                    class="w-full bg-[#f88c74] hover:bg-[#e67a63] text-white py-7 rounded-2xl text-2xl font-semibold">
+            <input type="text" id="name" placeholder="Имя" class="w-full px-6 py-5 border rounded-2xl text-lg">
+            <input type="tel" id="phone" placeholder="Телефон" class="w-full px-6 py-5 border rounded-2xl text-lg">
+            <button onclick="sendApplication()" type="button"
+                    class="w-full bg-[#cdc4bb] hover:bg-[#b8a99a] text-white py-7 rounded-2xl text-2xl font-semibold">
                 Отправить заявку
             </button>
         </form>
@@ -177,18 +165,25 @@
     <div class="max-w-7xl mx-auto px-6">
         <p class="text-xl mb-6">Анастасия Гришина • Авторский курс парикмахера</p>
         <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-lg">
-            <a href="tel:+79024895024" class="hover:text-[#f88c74]">+7 (902) 489-50-24</a>
-            <a href="https://t.me/grishina_style" target="_blank" class="hover:text-[#f88c74]">Telegram</a>
-            <a href="mailto:nastiagr83@mail.ru" class="hover:text-[#f88c74]">nastiagr83@mail.ru</a>
+            <a href="tel:+79024895024" class="hover:text-[#cdc4bb]">+7 (902) 489-50-24</a>
+            <a href="mailto:nastiagr83@mail.ru" class="hover:text-[#cdc4bb]">nastiagr83@mail.ru</a>
         </div>
         <p class="mt-10 text-sm opacity-60">ул. Русская 71, Владивосток © 2026</p>
     </div>
 </footer>
 
 <script>
-    function sendToTelegram() {
-        alert('✅ Заявка принята! Переходим в Telegram...');
-        window.open('https://t.me/grishina_style', '_blank');
+    function selectLevel(level) {
+        const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
+        const encoded = encodeURIComponent(message);
+        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
+    }
+
+    function sendApplication() {
+        const name = document.getElementById('name').value || 'Клиент';
+        const message = `Добрый день! Меня зовут ${name}. Хотелось бы записаться на обучение на парикмахера.`;
+        const encoded = encodeURIComponent(message);
+        window.open(`https://t.me/grishina_style?text=${encoded}`, '_blank');
     }
 </script>
 </body>
