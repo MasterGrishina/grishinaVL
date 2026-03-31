@@ -261,7 +261,7 @@
 </footer>
 
 <script>
-    // Слайдшоу
+    // Слайдшоу (оставляем как было)
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     function showSlide(index) {
@@ -282,6 +282,66 @@
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
     }
+
+    // ==================== PUSH-УВЕДОМЛЕНИЯ ====================
+    let swRegistration = null;
+
+    async function subscribeToNotifications() {
+        const btn = document.getElementById('notify-btn');
+        const status = document.getElementById('notify-status');
+
+        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+            status.textContent = "Ваш браузер не поддерживает push-уведомления";
+            return;
+        }
+
+        try {
+            btn.disabled = true;
+            btn.textContent = "Подключаем...";
+
+            // Регистрируем Service Worker
+            swRegistration = await navigator.serviceWorker.register('/sw.js');
+
+            // Запрашиваем разрешение
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                status.textContent = "Уведомления отклонены";
+                btn.textContent = "Включить уведомления";
+                btn.disabled = false;
+                return;
+            }
+
+            // Подписываемся
+            const subscription = await swRegistration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: 'ВАШ_VAPID_PUBLIC_KEY'   // ← заменишь позже
+            });
+
+            console.log('Подписка создана:', subscription);
+            status.textContent = "✅ Уведомления включены! Теперь вы будете получать новости о курсах.";
+            btn.style.display = 'none';
+
+            // Здесь позже можно отправить subscription на свой сервер
+            // await saveSubscription(subscription);
+
+        } catch (error) {
+            console.error(error);
+            status.textContent = "Ошибка подключения уведомлений";
+            btn.textContent = "Повторить";
+            btn.disabled = false;
+        }
+    }
+
+    // Автоматически проверяем, подписан ли пользователь
+    window.addEventListener('load', async () => {
+        if ('serviceWorker' in navigator) {
+            try {
+                swRegistration = await navigator.serviceWorker.register('/sw.js');
+            } catch (e) {
+                console.log('Service Worker не зарегистрирован');
+            }
+        }
+    });
 </script>
 </body>
 </html>
