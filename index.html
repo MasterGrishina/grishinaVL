@@ -261,7 +261,7 @@
 </footer>
 
 <script>
-    // Слайдшоу (оставляем как было)
+    // Слайдшоу
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     function showSlide(index) {
@@ -277,70 +277,78 @@
         showSlide(0);
     }
 
-    // Выбор уровня
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    // ==================== PUSH-УВЕДОМЛЕНИЯ ====================
-    let swRegistration = null;
+    // ==================== PUSH УВЕДОМЛЕНИЯ ====================
     const vapidPublicKey = "BKOlu6TjCtJk_xhEArSVIy_65nOQm9n51najbiOUWST2eYNs3BPfedks8BSXbaOBej9lqlczXceXv6gx6LrCsHQ";
 
     async function subscribeToNotifications() {
         const btn = document.getElementById('notify-btn');
         const status = document.getElementById('notify-status');
 
-        if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
-            status.textContent = "Ваш браузер не поддерживает push-уведомления";
+        if (!btn || !status) return;
+
+        btn.disabled = true;
+        btn.textContent = "Подключаем...";
+        status.textContent = "";
+
+        if (!('serviceWorker' in navigator)) {
+            status.textContent = "Service Worker не поддерживается вашим браузером";
+            resetButton();
+            return;
+        }
+
+        if (!('PushManager' in window)) {
+            status.textContent = "Push-уведомления не поддерживаются";
+            resetButton();
             return;
         }
 
         try {
-            btn.disabled = true;
-            btn.textContent = "Подключаем...";
+            // Регистрация Service Worker
+            const registration = await navigator.serviceWorker.register('/sw.js');
+            console.log('Service Worker зарегистрирован');
 
-            // Регистрируем Service Worker
-            swRegistration = await navigator.serviceWorker.register('/sw.js');
-
-            // Запрашиваем разрешение
             const permission = await Notification.requestPermission();
             if (permission !== 'granted') {
-                status.textContent = "Уведомления отклонены";
-                btn.textContent = "Включить уведомления";
-                btn.disabled = false;
+                status.textContent = "Уведомления были отклонены пользователем";
+                resetButton();
                 return;
             }
 
-            // Подписываемся
-            const subscription = await swRegistration.pushManager.subscribe({
+            const subscription = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
-                applicationServerKey: 'ВАШ_VAPID_PUBLIC_KEY'   // ← заменишь позже
+                applicationServerKey: vapidPublicKey
             });
 
-            console.log('Подписка создана:', subscription);
-            status.textContent = "✅ Уведомления включены! Теперь вы будете получать новости о курсах.";
+            console.log('Подписка успешно создана:', subscription);
+            status.innerHTML = `✅ Уведомления успешно включены!<br>Вы будете получать новости о новых потоках.`;
             btn.style.display = 'none';
 
-            // Здесь позже можно отправить subscription на свой сервер
-            // await saveSubscription(subscription);
-
         } catch (error) {
-            console.error(error);
-            status.textContent = "Ошибка подключения уведомлений";
-            btn.textContent = "Повторить";
+            console.error('Ошибка подписки:', error);
+            status.textContent = "Ошибка: " + error.message;
+            resetButton();
+        }
+    }
+
+    function resetButton() {
+        const btn = document.getElementById('notify-btn');
+        if (btn) {
+            btn.textContent = "Включить уведомления";
             btn.disabled = false;
         }
     }
 
-    // Автоматически проверяем, подписан ли пользователь
-    window.addEventListener('load', async () => {
+    // Автозапуск проверки
+    window.addEventListener('load', () => {
         if ('serviceWorker' in navigator) {
-            try {
-                swRegistration = await navigator.serviceWorker.register('/sw.js');
-            } catch (e) {
-                console.log('Service Worker не зарегистрирован');
-            }
+            navigator.serviceWorker.register('/sw.js').catch(err => {
+                console.log('SW registration failed:', err);
+            });
         }
     });
 </script>
