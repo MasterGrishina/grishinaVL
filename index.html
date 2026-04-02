@@ -289,32 +289,27 @@
         const btn = document.getElementById('notify-btn');
         const status = document.getElementById('notify-status');
 
-        if (!btn || !status) return;
-
         btn.disabled = true;
         btn.textContent = "Подключаем...";
         status.textContent = "";
 
-        if (!('serviceWorker' in navigator)) {
-            status.textContent = "Service Worker не поддерживается вашим браузером";
-            resetButton();
-            return;
-        }
-
-        if (!('PushManager' in window)) {
-            status.textContent = "Push-уведомления не поддерживаются";
-            resetButton();
-            return;
-        }
-
         try {
-            // Регистрация Service Worker
+            // Ждём регистрации Service Worker
             const registration = await navigator.serviceWorker.register('/sw.js');
-            console.log('Service Worker зарегистрирован');
+            await registration.update(); // обновляем на всякий случай
+
+            // Ждём, пока Service Worker станет активным
+            if (registration.active) {
+                console.log('Service Worker активен');
+            } else {
+                await new Promise(resolve => {
+                    registration.addEventListener('activate', () => resolve());
+                });
+            }
 
             const permission = await Notification.requestPermission();
             if (permission !== 'granted') {
-                status.textContent = "Уведомления были отклонены пользователем";
+                status.textContent = "Уведомления отклонены";
                 resetButton();
                 return;
             }
@@ -324,13 +319,13 @@
                 applicationServerKey: vapidPublicKey
             });
 
-            console.log('Подписка успешно создана:', subscription);
-            status.innerHTML = `✅ Уведомления успешно включены!<br>Вы будете получать новости о новых потоках.`;
+            console.log('Подписка создана:', subscription);
+            status.innerHTML = `✅ Уведомления включены!<br>Вы будете получать новости о курсах.`;
             btn.style.display = 'none';
 
         } catch (error) {
-            console.error('Ошибка подписки:', error);
-            status.textContent = "Ошибка: " + error.message;
+            console.error('Ошибка:', error);
+            status.textContent = "Ошибка: " + (error.message || error);
             resetButton();
         }
     }
@@ -343,14 +338,14 @@
         }
     }
 
-    // Автозапуск проверки
-    window.addEventListener('load', () => {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').catch(err => {
-                console.log('SW registration failed:', err);
-            });
-        }
-    });
+    // Автоматическая регистрация
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW зарегистрирован:', reg))
+                .catch(err => console.log('SW ошибка:', err));
+        });
+    }
 </script>
 </body>
 </html>
