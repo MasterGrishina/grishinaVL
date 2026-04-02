@@ -34,14 +34,38 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Хочу учиться" />
+    <meta name="theme-color" content="#cdc4bb" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0f766e" media="(prefers-color-scheme: dark)">
     <link rel="manifest" href="/site.webmanifest" />
     
     <script src="https://cdn.tailwindcss.com"></script>
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
+        body { font-family: 'Inter', sans-serif;
+             transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* Светлая тема (по умолчанию) */
+        body {
+            background-color: #f9fafb;
+            color: #1f2937;
+        }
+
+        /* Тёмная тема */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #111827;
+                color: #f3f4f6;
+            }
+            .bg-white { background-color: #1f2937 !important; }
+            .bg-gray-50 { background-color: #1f2937 !important; }
+            .shadow-sm { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3) !important; }
+            .text-gray-700 { color: #d1d5db !important; }
+            .text-gray-500 { color: #9ca3af !important; }
+            .text-gray-600 { color: #9ca3af !important; }
+        }
+
         .level-card {
             transition: all 0.4s ease;
             position: relative;
@@ -67,10 +91,18 @@
             background-color: #f88c74;
             color: white;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .header-btn:hover {
             background-color: #e67a63;
             transform: translateY(-2px);
+        .hero-btn {
+            background-color: white;
+            color: #f88c74;
+            transition: all 0.3s ease;
         }
         
         /* Кнопка в герое */
@@ -83,6 +115,7 @@
             background-color: #f8f8f8;
             color: #e67a63;
             transform: translateY(-2px);
+        
         }
         
         /* Зелёный цвет стоимости и кнопки "Хочу" */
