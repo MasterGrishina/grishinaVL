@@ -28,7 +28,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
     
-    <!-- Иконки для iPhone и Safari (максимальная совместимость) -->
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -99,12 +98,11 @@
 </head>
 <body class="bg-gray-50 text-gray-900">
 
-<!-- 1. ШАПКА -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
         
-        <a href="https://t.me/grishina_style" target="_blank"
+        <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
            class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3.5 rounded-full font-semibold text-base 
                   flex items-center justify-center text-center min-w-[200px] max-w-[220px]">
             Записаться на курс
@@ -112,7 +110,6 @@
     </div>
 </header>
 
-<!-- 2. ГЕРОЙ -->
 <section class="relative h-screen flex items-center text-white">
     <div class="slideshow absolute inset-0" id="slideshow">
         <div class="slide active" style="background-image: url('slide1.jpg');"></div>
@@ -132,14 +129,13 @@
             Начинай зарабатывать уже после первого уровня<br>
             Владивосток
         </div>
-        <a href="https://t.me/grishina_style" target="_blank"
+        <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
            class="hero-btn mt-12 inline-block px-12 py-6 rounded-2xl text-2xl font-bold">
             Записаться сейчас →
         </a>
     </div>
 </section>
 
-<!-- 3. ОБ АВТОРЕ -->
 <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <img src="photo.jpg" alt="Анастасия Гришина" 
@@ -154,7 +150,6 @@
     </div>
 </section>
 
-<!-- 4. ПРЕИМУЩЕСТВА -->
 <section class="py-20 bg-white">
     <div class="max-w-6xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
@@ -178,7 +173,6 @@
     </div>
 </section>
 
-<!-- 5. 4 УРОВНЯ -->
 <section class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
@@ -241,7 +235,6 @@
     </div>
 </section>
 
-<!-- 6. ФУТЕР -->
 <footer class="bg-[#181818] text-white py-12 text-center">
     <div class="max-w-7xl mx-auto px-6">
         <p class="text-xl mb-6">Анастасия Гришина • Авторский курс парикмахера</p>
@@ -278,9 +271,10 @@
         showSlide(0);
     }
 
+    // Измененная функция с новой ссылкой и сохраненным текстом
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        window.open(`https://t.me/grishina_style?text=${encodeURIComponent(message)}`, '_blank');
+        window.open(`https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0?text=${encodeURIComponent(message)}`, '_blank');
     }
 
     // ==================== PUSH УВЕДОМЛЕНИЯ ====================
