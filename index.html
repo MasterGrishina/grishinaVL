@@ -8,7 +8,6 @@
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyBtUIDikE_r5mvq-HG9SXOwCuYnDUfuWvU",
     authDomain: "grishina-42853.firebaseapp.com",
@@ -62,7 +61,6 @@
             opacity: 1;
         }
         
-        /* Красная кнопка в шапке */
         .header-btn {
             background-color: #f88c74;
             color: white;
@@ -73,7 +71,6 @@
             transform: translateY(-2px);
         }
         
-        /* Кнопка в герое */
         .hero-btn {
             background-color: white;
             color: #f88c74;
@@ -85,7 +82,6 @@
             transform: translateY(-2px);
         }
         
-        /* Зелёный цвет стоимости и кнопки "Хочу" */
         .price { color: #0f766e; }
         .want-btn { background-color: #0f766e; color: white; }
         
@@ -94,19 +90,45 @@
         .slide.active { opacity: 1; }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
         .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Стили для плавного скрытия модального окна */
+        #welcome-modal {
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-gray-50 text-gray-900 relative">
 
+<div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md opacity-0 invisible">
+    <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg w-full mx-4 text-center transform transition-transform duration-500 scale-95" id="welcome-modal-content">
+        <h2 class="text-3xl font-bold mb-4 text-gray-900">Добро пожаловать!</h2>
+        <p class="text-gray-600 mb-8 text-lg">Выберите, какое направление обучения вас интересует прямо сейчас:</p>
+        
+        <div class="flex flex-col gap-4">
+            <button onclick="closeWelcomeModal()" class="w-full bg-[#0f766e] hover:bg-[#0a5c56] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg">
+                Учиться курсам
+            </button>
+            <a href="https://mastergrishina.github.io" class="w-full bg-[#f88c74] hover:bg-[#e67a63] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg block">
+                Учиться профессии
+            </a>
+        </div>
+    </div>
+</div>
 <header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
         <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Гришина</div>
         
-        <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
-           class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3.5 rounded-full font-semibold text-base 
-                  flex items-center justify-center text-center min-w-[200px] max-w-[220px]">
-            Записаться на курс
-        </a>
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <a href="https://mastergrishina.github.io" class="text-gray-500 hover:text-[#f88c74] font-medium transition-colors text-sm md:text-base">
+                Перейти к обучению профессии →
+            </a>
+            
+            <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
+               class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3.5 rounded-full font-semibold text-base 
+                      flex items-center justify-center text-center w-full md:w-auto min-w-[200px]">
+                Записаться на курс
+            </a>
+        </div>
     </div>
 </header>
 
@@ -255,6 +277,43 @@
 </footer>
 
 <script>
+    // ==================== ЛОГИКА МОДАЛЬНОГО ОКНА ====================
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById('welcome-modal');
+        const modalContent = document.getElementById('welcome-modal-content');
+        
+        // Проверяем, показывали ли мы уже окно в этой сессии браузера
+        if (!sessionStorage.getItem('welcomeShown')) {
+            // Если нет, делаем окно видимым
+            modal.classList.remove('opacity-0', 'invisible');
+            modal.classList.add('opacity-100', 'visible');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            
+            // Блокируем прокрутку сайта, пока окно открыто
+            document.body.style.overflow = 'hidden';
+        }
+    });
+
+    function closeWelcomeModal() {
+        const modal = document.getElementById('welcome-modal');
+        const modalContent = document.getElementById('welcome-modal-content');
+        
+        // Плавно скрываем окно
+        modal.classList.remove('opacity-100', 'visible');
+        modal.classList.add('opacity-0', 'invisible');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        // Возвращаем прокрутку сайту
+        document.body.style.overflow = '';
+        
+        // Запоминаем, что пользователь уже сделал выбор, чтобы не показывать окно снова
+        sessionStorage.setItem('welcomeShown', 'true');
+    }
+
+    // ==================== ОСТАЛЬНЫЕ СКРИПТЫ ====================
+
     // Слайдшоу
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
@@ -271,13 +330,12 @@
         showSlide(0);
     }
 
-    // Измененная функция с новой ссылкой и сохраненным текстом
     function selectLevel(level) {
         const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
         window.open(`https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0?text=${encodeURIComponent(message)}`, '_blank');
     }
 
-    // ==================== PUSH УВЕДОМЛЕНИЯ ====================
+    // PUSH УВЕДОМЛЕНИЯ
     const vapidPublicKey = "BKOlu6TjCtJk_xhEArSVIy_65nOQm9n51najbiOUWST2eYNs3BPfedks8BSXbaOBej9lqlczXceXv6gx6LrCsHQ";
 
     async function subscribeToNotifications() {
@@ -289,11 +347,9 @@
         status.textContent = "";
 
         try {
-            // Ждём регистрации Service Worker
             const registration = await navigator.serviceWorker.register('/sw.js');
-            await registration.update(); // обновляем на всякий случай
+            await registration.update();
 
-            // Ждём, пока Service Worker станет активным
             if (registration.active) {
                 console.log('Service Worker активен');
             } else {
@@ -333,7 +389,6 @@
         }
     }
 
-    // Автоматическая регистрация
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/sw.js')
