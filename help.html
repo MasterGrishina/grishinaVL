@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ru">
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBtUIDikE_r5mvq-HG9SXOwCuYnDUfuWvU",
+    authDomain: "grishina-42853.firebaseapp.com",
+    projectId: "grishina-42853",
+    storageBucket: "grishina-42853.firebasestorage.app",
+    messagingSenderId: "1097464335398",
+    appId: "1:1097464335398:web:b3fff316b9989a5b35aae7",
+    measurementId: "G-YMWLP231H2"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
+    
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/web-app-manifest-192x192.png" type="image/png">
+    <meta name="theme-color" content="Хочу учиться" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .level-card {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .level-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+        }
+        .levels-container:hover .level-card:not(:hover) {
+            opacity: 0.68;
+        }
+        .want-btn {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .level-card:hover .want-btn {
+            opacity: 1;
+        }
+        
+        .header-btn {
+            background-color: #f88c74;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .header-btn:hover {
+            background-color: #e67a63;
+            transform: translateY(-2px);
+        }
+        
+        .hero-btn {
+            background-color: white;
+            color: #f88c74;
+            transition: all 0.3s ease;
+        }
+        .hero-btn:hover {
+            background-color: #f8f8f8;
+            color: #e67a63;
+            transform: translateY(-2px);
+        }
+        
+        .price { color: #0f766e; }
+        .want-btn { background-color: #0f766e; color: white; }
+        
+        .slideshow { position: relative; height: 100%; overflow: hidden; }
+        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
+        .slide.active { opacity: 1; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
+        .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Стили для плавного скрытия модального окна */
+        #welcome-modal {
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 relative">
+
+<div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md opacity-0 invisible">
+    <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg w-full mx-4 text-center transform transition-transform duration-500 scale-95" id="welcome-modal-content">
+        <h2 class="text-3xl font-bold mb-4 text-gray-900">Добро пожаловать!</h2>
+        <p class="text-gray-600 mb-8 text-lg">Выберите, какое направление обучения вас интересует прямо сейчас:</p>
+        
+        <div class="flex flex-col gap-4">
+            <button onclick="closeWelcomeModal()" class="w-full bg-[#0f766e] hover:bg-[#0a5c56] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg">
+                Отработать модуль
+            </button>
+            <a href="https://mastergrishina.github.io" class="w-full bg-[#f88c74] hover:bg-[#e67a63] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg block">
+                Получить профессию
+            </a>
+        </div>
+    </div>
+</div>
+<header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Угловская</div>
+        
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+            <a href="https://mastergrishina.github.io" class="text-gray-500 hover:text-[#f88c74] font-medium transition-colors text-sm md:text-base">
+                Перейти к получению профессии →
+            </a>
+            
+            <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
+               class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3.5 rounded-full font-semibold text-base 
+                      flex items-center justify-center text-center w-full md:w-auto min-w-[200px]">
+                Записаться на курс
+            </a>
+        </div>
+    </div>
+</header>
+
+<section class="relative h-screen flex items-center text-white">
+    <div class="slideshow absolute inset-0" id="slideshow">
+        <div class="slide active" style="background-image: url('slide1.jpg');"></div>
+        <div class="slide" style="background-image: url('slide2.jpg');"></div>
+        <div class="slide" style="background-image: url('slide3.jpg');"></div>
+        <div class="slide" style="background-image: url('slide4.jpg');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    
+    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+        <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-8">
+            Обучение на парикмахера<br>
+            <span class="text-4xl md:text-5xl">Авторский курс + Наставничество</span>
+        </h1>
+        <div class="text-2xl md:text-3xl max-w-3xl mx-auto leading-relaxed">
+            • 4 уровня •<br>
+            Начинай зарабатывать уже после первого уровня<br>
+            Владивосток
+        </div>
+        <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
+           class="hero-btn mt-12 inline-block px-12 py-6 rounded-2xl text-2xl font-bold">
+            Записаться сейчас →
+        </a>
+    </div>
+</section>
+
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+        <img src="photo.jpg" alt="Анастасия Угловская" 
+             class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-8">
+        <h2 class="text-3xl font-bold mb-6">Анастасия Угловская</h2>
+        <div class="text-xl text-gray-700 max-w-3xl mx-auto space-y-3">
+            <p class="author-line">• Руководитель студии красоты •</p>
+            <p class="author-line">• Технолог бренда Ph_laboratories •</p>
+            <p class="author-line">• Участник команды стилистов ВЭФ •</p>
+            <p class="author-line">• Победитель конкурса колористов •</p>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
+        <div class="grid md:grid-cols-3 gap-10">
+            <div class="text-center">
+                <div class="text-6xl mb-6">📚</div>
+                <h3 class="font-semibold text-xl mb-3">Фирменная тетрадь и именной сертификат</h3>
+                <p class="text-gray-600">Все записи, схемы и техники останутся у тебя навсегда</p>
+            </div>
+            <div class="text-center">
+                <div class="text-6xl mb-6">✂️</div>
+                <h3 class="font-semibold text-xl mb-3">Всё необходимое включено</h3>
+                <p class="text-gray-600">Профессиональные материалы и инструменты — ничего докупать не нужно</p>
+            </div>
+            <div class="text-center">
+                <div class="text-6xl mb-6">👥</div>
+                <h3 class="font-semibold text-xl mb-3">Практика на реальных моделях</h3>
+                <p class="text-gray-600">Работа под моим личным контролем на каждом занятии</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
+        <div class="levels-container grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            
+            <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="text-5xl font-bold mb-2 text-[#0f766e]">01</div>
+                <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
+                <p class="text-sm text-gray-500 mb-6">5 занятий × 4 часа</p>
+                <ul class="space-y-3 text-sm">
+                    <li>✅ Окрашивание тон в тон / седина</li>
+                    <li>✅ Профессиональное мытьё + SPA</li>
+                    <li>✅ Укладки весна-лето 2026</li>
+                </ul>
+                <div class="mt-8 text-3xl font-bold price">18 500 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
+            </div>
+
+            <div onclick="selectLevel(2)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="text-5xl font-bold mb-2 text-[#0f766e]">02</div>
+                <h3 class="text-2xl font-semibold mb-4">Профи</h3>
+                <p class="text-sm text-gray-500 mb-6">6 занятий × 4 часа</p>
+                <ul class="space-y-3 text-sm">
+                    <li>✅ Фундамент колористики</li>
+                    <li>✅ Структура волос</li>
+                    <li>✅ Кислая смывка и нейтрализация</li>
+                </ul>
+                <div class="mt-8 text-3xl font-bold price">27 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
+            </div>
+
+            <div onclick="selectLevel(3)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="text-5xl font-bold mb-2 text-[#0f766e]">03</div>
+                <h3 class="text-2xl font-semibold mb-4">Эксперт</h3>
+                <p class="text-sm text-gray-500 mb-6">5 занятий × 5 часов</p>
+                <ul class="space-y-3 text-sm">
+                    <li>✅ Блонд тотал</li>
+                    <li>✅ Работа пудрой и контуринг</li>
+                    <li>✅ Тонирование и смывка</li>
+                </ul>
+                <div class="mt-8 text-3xl font-bold price">35 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
+            </div>
+
+            <div onclick="selectLevel(4)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
+                <div class="text-5xl font-bold mb-2 text-[#0f766e]">04</div>
+                <h3 class="text-2xl font-semibold mb-4">Маэстро</h3>
+                <p class="text-sm text-gray-500 mb-6">4 занятия × 5 часов</p>
+                <ul class="space-y-3 text-sm">
+                    <li>✅ Женские стрижки 2026</li>
+                    <li>✅ 3 базовые коммерческие формы</li>
+                </ul>
+                <div class="mt-8 text-3xl font-bold price">35 000 ₽</div>
+                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
+            </div>
+        </div>
+        <p class="text-center mt-12 text-lg font-medium accent">
+            При прохождении 2 и более уровней — скидка 10%
+        </p>
+    </div>
+</section>
+
+<footer class="bg-[#181818] text-white py-12 text-center">
+    <div class="max-w-7xl mx-auto px-6">
+        <p class="text-xl mb-6">Анастасия Угловская • Авторский курс парикмахера</p>
+        <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-lg">
+            <a href="tel:+79024895024" class="hover:text-[#cdc4bb]">+7 (902) 489-50-24</a>
+            <a href="mailto:nastiagr83@mail.ru" class="hover:text-[#cdc4bb]">nastiagr83@mail.ru</a>
+        </div>
+        <p class="mt-10 text-sm opacity-60">ул. Русская 71, Владивосток © 2026</p>
+    </div>
+    <div class="text-center mt-8 hidden">
+    <button onclick="subscribeToNotifications()" 
+            id="notify-btn"
+            class="bg-[#0f766e] hover:bg-[#0a5c56] text-white px-8 py-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-2 mx-auto">
+        🛎️ Включить уведомления о новых потоках
+    </button>
+    <p id="notify-status" class="text-sm text-gray-500 mt-3"></p>
+    </div>
+</footer>
+
+<script>
+    // ==================== ЛОГИКА МОДАЛЬНОГО ОКНА ====================
+    document.addEventListener("DOMContentLoaded", () => {
+        const modal = document.getElementById('welcome-modal');
+        const modalContent = document.getElementById('welcome-modal-content');
+        
+        // Проверяем, показывали ли мы уже окно в этой сессии браузера
+        if (!sessionStorage.getItem('welcomeShown')) {
+            // Если нет, делаем окно видимым
+            modal.classList.remove('opacity-0', 'invisible');
+            modal.classList.add('opacity-100', 'visible');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+            
+            // Блокируем прокрутку сайта, пока окно открыто
+            document.body.style.overflow = 'hidden';
+        }
+    });
+
+    function closeWelcomeModal() {
+        const modal = document.getElementById('welcome-modal');
+        const modalContent = document.getElementById('welcome-modal-content');
+        
+        // Плавно скрываем окно
+        modal.classList.remove('opacity-100', 'visible');
+        modal.classList.add('opacity-0', 'invisible');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+        
+        // Возвращаем прокрутку сайту
+        document.body.style.overflow = '';
+        
+        // Запоминаем, что пользователь уже сделал выбор, чтобы не показывать окно снова
+        sessionStorage.setItem('welcomeShown', 'true');
+    }
+
+    // ==================== ОСТАЛЬНЫЕ СКРИПТЫ ====================
+
+    // Слайдшоу
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    function showSlide(help) {
+        slides.forEach(s => s.classList.remove('active'));
+        if (slides[help]) slides[help].classList.add('active');
+    }
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    if (slides.length > 0) {
+        setInterval(nextSlide, 5000);
+        showSlide(0);
+    }
+
+    function selectLevel(level) {
+        const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
+        window.open(`https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // PUSH УВЕДОМЛЕНИЯ
+    const vapidPublicKey = "BKOlu6TjCtJk_xhEArSVIy_65nOQm9n51najbiOUWST2eYNs3BPfedks8BSXbaOBej9lqlczXceXv6gx6LrCsHQ";
+
+    async function subscribeToNotifications() {
+        const btn = document.getElementById('notify-btn');
+        const status = document.getElementById('notify-status');
+
+        btn.disabled = true;
+        btn.textContent = "Подключаем...";
+        status.textContent = "";
+
+        try {
+            const registration = await navigator.serviceWorker.register('/sw.js');
+            await registration.update();
+
+            if (registration.active) {
+                console.log('Service Worker активен');
+            } else {
+                await new Promise(resolve => {
+                    registration.addEventListener('activate', () => resolve());
+                });
+            }
+
+            const permission = await Notification.requestPermission();
+            if (permission !== 'granted') {
+                status.textContent = "Уведомления отклонены";
+                resetButton();
+                return;
+            }
+
+            const subscription = await registration.pushManager.subscribe({
+                userVisibleOnly: true,
+                applicationServerKey: vapidPublicKey
+            });
+
+            console.log('Подписка создана:', subscription);
+            status.innerHTML = `✅ Уведомления включены!<br>Вы будете получать новости о курсах.`;
+            btn.style.display = 'none';
+
+        } catch (error) {
+            console.error('Ошибка:', error);
+            status.textContent = "Ошибка: " + (error.message || error);
+            resetButton();
+        }
+    }
+
+    function resetButton() {
+        const btn = document.getElementById('notify-btn');
+        if (btn) {
+            btn.textContent = "Включить уведомления";
+            btn.disabled = false;
+        }
+    }
+
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('SW зарегистрирован:', reg))
+                .catch(err => console.log('SW ошибка:', err));
+        });
+    }
+</script>
+</body>
+</html>
