@@ -1,39 +1,16 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyBtUIDikE_r5mvq-HG9SXOwCuYnDUfuWvU",
-    authDomain: "grishina-42853.firebaseapp.com",
-    projectId: "grishina-42853",
-    storageBucket: "grishina-42853.firebasestorage.app",
-    messagingSenderId: "1097464335398",
-    appId: "1:1097464335398:web:b3fff316b9989a5b35aae7",
-    measurementId: "G-YMWLP231H2"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Обучение на парикмахера • Авторский курс + Наставничество | Владивосток</title>
+    <title>Секреты ухода за волосами • Парикмахерские лайфхаки от Анастасии Угловской</title>
     
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="icon" href="/web-app-manifest-192x192.png" type="image/png">
-    <meta name="theme-color" content="Хочу учиться" />
-    <link rel="manifest" href="/site.webmanifest" />
     
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -41,24 +18,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
         
-        .level-card {
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .level-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
-        }
-        .levels-container:hover .level-card:not(:hover) {
-            opacity: 0.68;
-        }
-        .want-btn {
-            opacity: 0;
+        .tab-btn {
             transition: all 0.3s ease;
         }
-        .level-card:hover .want-btn {
-            opacity: 1;
+        .tab-btn.active {
+            background-color: #0f766e;
+            color: white;
         }
         
         .header-btn {
@@ -71,192 +36,305 @@
             transform: translateY(-2px);
         }
         
-        .hero-btn {
-            background-color: white;
-            color: #f88c74;
+        .tip-card {
             transition: all 0.3s ease;
         }
-        .hero-btn:hover {
-            background-color: #f8f8f8;
-            color: #e67a63;
-            transform: translateY(-2px);
+        .tip-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px -10px rgb(0 0 0 / 0.1);
         }
         
-        .price { color: #0f766e; }
-        .want-btn { background-color: #0f766e; color: white; }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 1000px; /* Достаточная высота для раскрытия */
+        }
         
-        .slideshow { position: relative; height: 100%; overflow: hidden; }
-        .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease; }
-        .slide.active { opacity: 1; }
-        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)); }
-        .author-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-        /* Стили для плавного скрытия модального окна */
-        #welcome-modal {
-            transition: opacity 0.5s ease, visibility 0.5s ease;
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        .rotate-icon.open {
+            transform: rotate(180deg);
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900 relative">
 
-<div id="welcome-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-md opacity-0 invisible">
-    <div class="bg-white p-8 md:p-12 rounded-[2rem] shadow-2xl max-w-lg w-full mx-4 text-center transform transition-transform duration-500 scale-95" id="welcome-modal-content">
-        <h2 class="text-3xl font-bold mb-4 text-gray-900">Добро пожаловать!</h2>
-        <p class="text-gray-600 mb-8 text-lg">Выберите, какое направление обучения вас интересует прямо сейчас:</p>
-        
-        <div class="flex flex-col gap-4">
-            <button onclick="closeWelcomeModal()" class="w-full bg-[#0f766e] hover:bg-[#0a5c56] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg">
-                Отработать модуль
-            </button>
-            <a href="https://mastergrishina.github.io" class="w-full bg-[#f88c74] hover:bg-[#e67a63] text-white py-4 rounded-2xl text-xl font-semibold transition-colors shadow-lg block">
-                Получить профессию
-            </a>
-        </div>
-    </div>
-</div>
+<!-- Хедер, повторяющий стиль главного сайта -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-6 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="text-2xl font-bold text-[#cdc4bb]">Анастасия Угловская</div>
+        <div class="flex flex-col items-center md:items-start">
+            <div class="text-2xl font-bold text-[#cdc4bb] leading-none">Анастасия Угловская</div>
+            <span class="text-xs text-gray-400 mt-1 uppercase tracking-wider font-semibold">Бьюти-гид & Лайфхаки</span>
+        </div>
         
         <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
-            <a href="https://mastergrishina.github.io" class="text-gray-500 hover:text-[#f88c74] font-medium transition-colors text-sm md:text-base">
-                Перейти к получению профессии →
+            <a href="index.html" class="text-gray-500 hover:text-[#f88c74] font-medium transition-colors text-sm md:text-base flex items-center gap-1">
+                ← На главную к курсам
             </a>
             
             <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
                class="bg-[#f88c74] hover:bg-[#e67a63] text-white px-8 py-3.5 rounded-full font-semibold text-base 
-                      flex items-center justify-center text-center w-full md:w-auto min-w-[200px]">
-                Записаться на курс
+                      flex items-center justify-center text-center w-full md:w-auto min-w-[200px] header-btn">
+                Задать вопрос
             </a>
         </div>
     </div>
 </header>
 
-<section class="relative h-screen flex items-center text-white">
-    <div class="slideshow absolute inset-0" id="slideshow">
-        <div class="slide active" style="background-image: url('slide1.jpg');"></div>
-        <div class="slide" style="background-image: url('slide2.jpg');"></div>
-        <div class="slide" style="background-image: url('slide3.jpg');"></div>
-        <div class="slide" style="background-image: url('slide4.jpg');"></div>
-    </div>
-    <div class="hero-overlay"></div>
-    
-    <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-        <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-8">
-            Обучение на парикмахера<br>
-            <span class="text-4xl md:text-5xl">Авторский курс + Наставничество</span>
+<!-- Герой-секция страницы знаний -->
+<section class="relative bg-[#0f766e] py-16 md:py-24 text-white overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <span class="bg-white/10 text-white text-xs md:text-sm font-semibold uppercase tracking-widest px-4 py-1.5 rounded-full inline-block mb-4">
+            Школа красивых волос
+        </span>
+        <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+            Секреты ухода и парикмахерские уловки
         </h1>
-        <div class="text-2xl md:text-3xl max-w-3xl mx-auto leading-relaxed">
-            • 4 уровня •<br>
-            Начинай зарабатывать уже после первого уровня<br>
-            Владивосток
-        </div>
-        <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
-           class="hero-btn mt-12 inline-block px-12 py-6 rounded-2xl text-2xl font-bold">
-            Записаться сейчас →
-        </a>
-    </div>
-</section>
-
-<section class="py-16 bg-white">
-    <div class="max-w-4xl mx-auto px-6 text-center">
-        <img src="photo.jpg" alt="Анастасия Угловская" 
-             class="mx-auto w-40 h-40 object-cover rounded-full border-8 border-[#cdc4bb] shadow-xl mb-8">
-        <h2 class="text-3xl font-bold mb-6">Анастасия Угловская</h2>
-        <div class="text-xl text-gray-700 max-w-3xl mx-auto space-y-3">
-            <p class="author-line">• Руководитель студии красоты •</p>
-            <p class="author-line">• Технолог бренда Ph_laboratories •</p>
-            <p class="author-line">• Участник команды стилистов ВЭФ •</p>
-            <p class="author-line">• Победитель конкурса колористов •</p>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-12">Почему выбирают мой курс</h2>
-        <div class="grid md:grid-cols-3 gap-10">
-            <div class="text-center">
-                <div class="text-6xl mb-6">📚</div>
-                <h3 class="font-semibold text-xl mb-3">Фирменная тетрадь и именной сертификат</h3>
-                <p class="text-gray-600">Все записи, схемы и техники останутся у тебя навсегда</p>
-            </div>
-            <div class="text-center">
-                <div class="text-6xl mb-6">✂️</div>
-                <h3 class="font-semibold text-xl mb-3">Всё необходимое включено</h3>
-                <p class="text-gray-600">Профессиональные материалы и инструменты — ничего докупать не нужно</p>
-            </div>
-            <div class="text-center">
-                <div class="text-6xl mb-6">👥</div>
-                <h3 class="font-semibold text-xl mb-3">Практика на реальных моделях</h3>
-                <p class="text-gray-600">Работа под моим личным контролем на каждом занятии</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-bold text-center mb-16">4 уровня мастерства</h2>
-        <div class="levels-container grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <div onclick="selectLevel(1)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
-                <div class="text-5xl font-bold mb-2 text-[#0f766e]">01</div>
-                <h3 class="text-2xl font-semibold mb-4">Юниор</h3>
-                <p class="text-sm text-gray-500 mb-6">5 занятий × 4 часа</p>
-                <ul class="space-y-3 text-sm">
-                    <li>✅ Окрашивание тон в тон / седина</li>
-                    <li>✅ Профессиональное мытьё + SPA</li>
-                    <li>✅ Укладки весна-лето 2026</li>
-                </ul>
-                <div class="mt-8 text-3xl font-bold price">18 500 ₽</div>
-                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
-            </div>
-
-            <div onclick="selectLevel(2)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
-                <div class="text-5xl font-bold mb-2 text-[#0f766e]">02</div>
-                <h3 class="text-2xl font-semibold mb-4">Профи</h3>
-                <p class="text-sm text-gray-500 mb-6">6 занятий × 4 часа</p>
-                <ul class="space-y-3 text-sm">
-                    <li>✅ Фундамент колористики</li>
-                    <li>✅ Структура волос</li>
-                    <li>✅ Кислая смывка и нейтрализация</li>
-                </ul>
-                <div class="mt-8 text-3xl font-bold price">27 000 ₽</div>
-                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
-            </div>
-
-            <div onclick="selectLevel(3)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
-                <div class="text-5xl font-bold mb-2 text-[#0f766e]">03</div>
-                <h3 class="text-2xl font-semibold mb-4">Эксперт</h3>
-                <p class="text-sm text-gray-500 mb-6">5 занятий × 5 часов</p>
-                <ul class="space-y-3 text-sm">
-                    <li>✅ Блонд тотал</li>
-                    <li>✅ Работа пудрой и контуринг</li>
-                    <li>✅ Тонирование и смывка</li>
-                </ul>
-                <div class="mt-8 text-3xl font-bold price">35 000 ₽</div>
-                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
-            </div>
-
-            <div onclick="selectLevel(4)" class="level-card bg-white p-8 rounded-3xl shadow cursor-pointer">
-                <div class="text-5xl font-bold mb-2 text-[#0f766e]">04</div>
-                <h3 class="text-2xl font-semibold mb-4">Маэстро</h3>
-                <p class="text-sm text-gray-500 mb-6">4 занятия × 5 часов</p>
-                <ul class="space-y-3 text-sm">
-                    <li>✅ Женские стрижки 2026</li>
-                    <li>✅ 3 базовые коммерческие формы</li>
-                </ul>
-                <div class="mt-8 text-3xl font-bold price">35 000 ₽</div>
-                <div class="want-btn absolute bottom-6 right-6 px-6 py-2 rounded-full text-sm font-medium">Хочу</div>
-            </div>
-        </div>
-        <p class="text-center mt-12 text-lg font-medium accent">
-            При прохождении 2 и более уровней — скидка 10%
+        <p class="text-lg md:text-xl text-emerald-50 max-w-2xl mx-auto font-light leading-relaxed">
+            Простые правила, профессиональные хитрости и развенчание мифов, которые помогут сохранить здоровье волос в домашних условиях.
         </p>
     </div>
 </section>
 
+<!-- Основной блок с советами -->
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-6">
+        
+        <!-- Кнопки фильтрации (Категории) -->
+        <div class="flex flex-wrap justify-center gap-3 mb-12" id="filter-container">
+            <button onclick="filterTips('all')" class="tab-btn active px-6 py-3 rounded-2xl text-sm md:text-base font-medium border border-gray-200 hover:border-gray-300">
+                ✨ Все советы
+            </button>
+            <button onclick="filterTips('care')" class="tab-btn px-6 py-3 rounded-2xl text-sm md:text-base font-medium border border-gray-200 hover:border-gray-300 bg-white">
+                🧴 Домашний уход
+            </button>
+            <button onclick="filterTips('styling')" class="tab-btn px-6 py-3 rounded-2xl text-sm md:text-base font-medium border border-gray-200 hover:border-gray-300 bg-white">
+                💨 Секреты укладки
+            </button>
+            <button onclick="filterTips('color')" class="tab-btn px-6 py-3 rounded-2xl text-sm md:text-base font-medium border border-gray-200 hover:border-gray-300 bg-white">
+                🎨 Сохранение цвета
+            </button>
+            <button onclick="filterTips('hacks')" class="tab-btn px-6 py-3 rounded-2xl text-sm md:text-base font-medium border border-gray-200 hover:border-gray-300 bg-white">
+                💡 Лайфхаки стилиста
+            </button>
+        </div>
+
+        <!-- Сетка карточек -->
+        <div class="grid md:grid-cols-2 gap-8" id="tips-grid">
+            
+            <!-- Карточка 1: Домашний уход -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="care">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">🧴</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Домашний уход</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Как правильно мыть голову?</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Удивительно, но более 70% людей моют голову неправильно, совершая классические ошибки, которые травмируют полотно волос.
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p><strong>Шаг 1:</strong> Тщательно промочите волосы водой в течение 1–2 минут. Вода должна быть теплой, но не горячей.</p>
+                    <p><strong>Шаг 2:</strong> Вспеньте шампунь в ладонях, добавив немного воды, и наносите его <strong>только на корни и кожу головы</strong>. Полотну волос для очищения вполне достаточно стекающей пены.</p>
+                    <p><strong>Шаг 3:</strong> Обязательно промывайте голову шампунем <strong>дважды</strong>. Первый раз смывает поверхностные загрязнения и стайлинг, второй — полноценно очищает кожу.</p>
+                    <p><strong>Шаг 4:</strong> После смывания слегка отожмите волосы полотенцем и только потом наносите кондиционер (отступая от корней 5–10 см).</p>
+                </div>
+            </div>
+
+            <!-- Карточка 2: Секреты укладки -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="styling">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">💨</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Секреты укладки</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Создание стойкого прикорневого объема</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Объем падает через полчаса после выхода из дома? Рассказываю, как зафиксировать форму у корней без эффекта склеенности.
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p>• <strong>Сушка вниз головой:</strong> Сушите прикорневую зону, опустив голову вниз, направляя поток воздуха от корней к концам. Это задает волосам правильное направление.</p>
+                    <p>• <strong>Магия холодного воздуха:</strong> Разогретая прядь пластична. Закончив сушить корень круглой щеткой, обязательно зафиксируйте ее в приподнятом положении струей холодного воздуха из фена на 5 секунд.</p>
+                    <p>• <strong>Правильный пудровый финиш:</strong> Используйте специальную текстурирующую пудру для волос. Нанесите совсем немного по проборам на сухие корни и слегка взбейте пальцами.</p>
+                </div>
+            </div>
+
+            <!-- Карточка 3: Сохранение цвета -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="color">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">🎨</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Сохранение цвета</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Как остановить вымывание блонда и ярких оттенков</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Свежее окрашивание выглядит невероятно, но уже через пару недель тускнеет. Как продлить жизнь салонному цвету?
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p>• <strong>Карантин на первые 48 часов:</strong> Не мойте голову первые двое суток после окрашивания. Молекулам пигмента нужно время, чтобы окончательно закрепиться в кортексе волоса.</p>
+                    <p>• <strong>Прощайте, сульфаты:</strong> Безсульфатные шампуни деликатнее очищают и не раскрывают чешуйки волоса так сильно, как обычные.</p>
+                    <p>• <strong>Защита от тепла:</strong> Всегда используйте термозащиту при укладке плойкой или утюжком. Высокая температура буквально «выжигает» искусственный пигмент.</p>
+                </div>
+            </div>
+
+            <!-- Карточка 4: Лайфхаки стилиста -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="hacks">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">💡</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Лайфхаки стилиста</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Экспресс-приемы для идеального визуала</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Несколько хитростей из арсенала стилистов, которые спасут ваш образ, когда времени на полноценные сборы критически мало.
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p>• <strong>Укрощение пушка зубной щеткой:</strong> Если на проборе торчат короткие волоски («антеннки»), распылите лак средней фиксации на чистую зубную щетку и аккуратно пригладьте их по росту волос.</p>
+                    <p>• <strong>Шелковая наволочка:</strong> Замените хлопковую наволочку на шелковую или сатиновую. Гладкая ткань снижает трение во время сна, уберегая кончики от сечения и излишнего пушения к утру.</p>
+                    <p>• <strong>Масло только на влажные волосы:</strong> Масла для волос работают как окклюзив (запечатывают влагу). Если нанести их на абсолютно сухие кончики, они могут сделать их еще жестче. Наносите на влажные волосы перед сушкой.</p>
+                </div>
+            </div>
+
+            <!-- Карточка 5: Домашний уход -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="care">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">🧴</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Домашний уход</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Кондиционер, маска, филлер: в чем разница?</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Хаотичное использование баночек из ванной часто не дает результата. Важно понимать иерархию ухода.
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p>• <strong>Маска:</strong> Это тяжелая артиллерия. Она проникает глубоко в структуру (кортекс) волоса, питая и восстанавливая его. Наносится на 10-15 минут, используется 1-2 раза в неделю.</p>
+                    <p>• <strong>Кондиционер / Бальзам:</strong> Закрывает кутикулу (внешний слой), сглаживает чешуйки, облегчает расчесывание и дарит блеск. <strong>Должен использоваться после каждого мытья!</strong> Даже после маски (маска питает изнутри, кондиционер закрывает это питание снаружи).</p>
+                    <p>• <strong>Несмываемый уход (спреи/кремы):</strong> Защищают полотно от внешней среды, кондиционируют в течение дня и служат дополнительным SPF-барьером.</p>
+                </div>
+            </div>
+
+            <!-- Карточка 6: Лайфхаки стилиста -->
+            <div class="tip-card bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-gray-100" data-category="hacks">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-3xl">💡</span>
+                    <div>
+                        <span class="text-xs font-bold text-[#0f766e] uppercase tracking-wider">Лайфхаки стилиста</span>
+                        <h3 class="text-xl font-bold text-gray-900 mt-0.5">Как правильно сушить волосы феном без вреда</h3>
+                    </div>
+                </div>
+                <p class="text-gray-600 leading-relaxed mb-4">
+                    Естественная сушка не всегда полезна. Мокрый волос растянут и беззащитен, а правильная сушка феном закрывает кутикулу.
+                </p>
+                <button onclick="toggleAccordion(this)" class="flex items-center gap-2 text-[#f88c74] font-semibold hover:text-[#e67a63] transition-colors focus:outline-none">
+                    <span>Читать разбор полностью</span>
+                    <svg class="w-4 h-4 rotate-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content text-gray-600 space-y-3 pt-3 text-sm border-t border-gray-100 mt-3">
+                    <p>• <strong>Направление воздуха:</strong> Фен всегда должен дуть сверху вниз — <strong>от корней к кончикам</strong>. Это приглаживает чешуйки кутикулы, делая полотно гладким и глянцевым. Хаотичная сушка во все стороны распушает кутикулу и лишает блеска.</p>
+                    <p>• <strong>Расстояние:</strong> Держите сопло фена на расстоянии 15–20 см от волос. Постоянно перемещайте фен, не задерживая горячий поток воздуха на одном месте.</p>
+                    <p>• <strong>Концентратор:</strong> Всегда используйте узкую насадку-концентратор, которая идет в комплекте с феном. Она направляет воздух ровно по прядям, не пересушивая соседние участки.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Интерактивная секция: Проверь свои знания -->
+<section class="py-16 bg-[#cdc4bb]/10 border-t border-b border-gray-100">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white rounded-[2.5rem] p-8 md:p-12 shadow-md">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-2">Блиц-тест: разрушаем мифы</h2>
+            <p class="text-gray-500 text-center mb-8">Нажмите на карточку мифа, чтобы узнать правду от эксперта</p>
+            
+            <div class="space-y-4">
+                <!-- Миф 1 -->
+                <div class="border border-gray-100 rounded-2xl p-5 hover:bg-gray-50 cursor-pointer transition-colors" onclick="toggleQuiz(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-gray-800">Миф №1: Если часто стричь кончики, волосы будут расти быстрее?</span>
+                        <span class="text-[#f88c74] font-bold text-xl quiz-icon">+</span>
+                    </div>
+                    <p class="quiz-answer text-gray-600 text-sm mt-3 hidden border-t border-gray-100 pt-3 leading-relaxed">
+                        ❌ <strong>Это миф!</strong> Рост волос происходит из волосяной луковицы на коже головы. Стрижка концов никак не влияет на корни. Однако регулярное подравнивание срезает сухие расслаивающиеся кончики, благодаря чему волосы выглядят гуще и сохраняют длину, не обламываясь на концах.
+                    </p>
+                </div>
+
+                <!-- Миф 2 -->
+                <div class="border border-gray-100 rounded-2xl p-5 hover:bg-gray-50 cursor-pointer transition-colors" onclick="toggleQuiz(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-gray-800">Миф №2: Холодная вода закрывает кутикулу и дарит блеск?</span>
+                        <span class="text-[#f88c74] font-bold text-xl quiz-icon">+</span>
+                    </div>
+                    <p class="quiz-answer text-gray-600 text-sm mt-3 hidden border-t border-gray-100 pt-3 leading-relaxed">
+                        ✅ <strong>Это правда!</strong> Завершающее ополаскивание прохладной водой действительно помогает сузить кровеносные сосуды кожи головы, успокаивает ее и приглаживает кератиновые чешуйки кутикулы волос. Благодаря этому они лучше отражают свет и обретают естественный блеск.
+                    </p>
+                </div>
+
+                <!-- Миф 3 -->
+                <div class="border border-gray-100 rounded-2xl p-5 hover:bg-gray-50 cursor-pointer transition-colors" onclick="toggleQuiz(this)">
+                    <div class="flex justify-between items-center">
+                        <span class="font-semibold text-gray-800">Миф №3: Шампунь нужно периодически менять, так как волосы "привыкают"?</span>
+                        <span class="text-[#f88c74] font-bold text-xl quiz-icon">+</span>
+                    </div>
+                    <p class="quiz-answer text-gray-600 text-sm mt-3 hidden border-t border-gray-100 pt-3 leading-relaxed">
+                        ❌ <strong>Это миф!</strong> Живой части волоса нет на поверхности, привыкание невозможно. Шампунь подбирается по типу кожи головы. Если состояние вашей кожи не изменилось (например, не стало суше от климата или гормонального фона), ваш любимый шампунь будет отлично работать годами.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Баннер-призыв к обучению -->
+<section class="py-20 bg-white text-center">
+    <div class="max-w-4xl mx-auto px-6">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">Хотите узнать больше и сделать это своей профессией?</h2>
+        <p class="text-gray-600 text-lg mb-8 max-w-2xl mx-auto">
+            На моем курсе во Владивостоке мы разбираем тонкости колористики, физиологию волос и схемы трендовых стрижек на практике с первого дня.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="index.html" class="bg-[#0f766e] hover:bg-[#0a5c56] text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all transform hover:-translate-y-1 shadow-md">
+                Смотреть уровни обучения
+            </a>
+            <a href="https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0" target="_blank"
+               class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-8 py-4 rounded-2xl font-bold text-lg transition-all transform hover:-translate-y-1">
+                Консультация в WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Подвал в стиле главной страницы -->
 <footer class="bg-[#181818] text-white py-12 text-center">
     <div class="max-w-7xl mx-auto px-6">
         <p class="text-xl mb-6">Анастасия Угловская • Авторский курс парикмахера</p>
@@ -266,136 +344,70 @@
         </div>
         <p class="mt-10 text-sm opacity-60">ул. Русская 71, Владивосток © 2026</p>
     </div>
-    <div class="text-center mt-8 hidden">
-    <button onclick="subscribeToNotifications()" 
-            id="notify-btn"
-            class="bg-[#0f766e] hover:bg-[#0a5c56] text-white px-8 py-4 rounded-2xl font-semibold text-base flex items-center justify-center gap-2 mx-auto">
-        🛎️ Включить уведомления о новых потоках
-    </button>
-    <p id="notify-status" class="text-sm text-gray-500 mt-3"></p>
-    </div>
 </footer>
 
 <script>
-    // ==================== ЛОГИКА МОДАЛЬНОГО ОКНА ====================
-    document.addEventListener("DOMContentLoaded", () => {
-        const modal = document.getElementById('welcome-modal');
-        const modalContent = document.getElementById('welcome-modal-content');
-        
-        // Проверяем, показывали ли мы уже окно в этой сессии браузера
-        if (!sessionStorage.getItem('welcomeShown')) {
-            // Если нет, делаем окно видимым
-            modal.classList.remove('opacity-0', 'invisible');
-            modal.classList.add('opacity-100', 'visible');
-            modalContent.classList.remove('scale-95');
-            modalContent.classList.add('scale-100');
-            
-            // Блокируем прокрутку сайта, пока окно открыто
-            document.body.style.overflow = 'hidden';
-        }
-    });
-
-    function closeWelcomeModal() {
-        const modal = document.getElementById('welcome-modal');
-        const modalContent = document.getElementById('welcome-modal-content');
-        
-        // Плавно скрываем окно
-        modal.classList.remove('opacity-100', 'visible');
-        modal.classList.add('opacity-0', 'invisible');
-        modalContent.classList.remove('scale-100');
-        modalContent.classList.add('scale-95');
-        
-        // Возвращаем прокрутку сайту
-        document.body.style.overflow = '';
-        
-        // Запоминаем, что пользователь уже сделал выбор, чтобы не показывать окно снова
-        sessionStorage.setItem('welcomeShown', 'true');
-    }
-
-    // ==================== ОСТАЛЬНЫЕ СКРИПТЫ ====================
-
-    // Слайдшоу
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    function showSlide(index) {
-        slides.forEach(s => s.classList.remove('active'));
-        if (slides[index]) slides[index].classList.add('active');
-    }
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }
-    if (slides.length > 0) {
-        setInterval(nextSlide, 5000);
-        showSlide(0);
-    }
-
-    function selectLevel(level) {
-        const message = `Добрый день! Хотелось бы записаться на обучение на ${level} уровень к Вам…`;
-        window.open(`https://max.ru/u/f9LHodD0cOLKf1Xo5KN96NlkaKKb4LmHvKcTpF4IMKcDRor2DSQR45mErI0?text=${encodeURIComponent(message)}`, '_blank');
-    }
-
-    // PUSH УВЕДОМЛЕНИЯ
-    const vapidPublicKey = "BKOlu6TjCtJk_xhEArSVIy_65nOQm9n51najbiOUWST2eYNs3BPfedks8BSXbaOBej9lqlczXceXv6gx6LrCsHQ";
-
-    async function subscribeToNotifications() {
-        const btn = document.getElementById('notify-btn');
-        const status = document.getElementById('notify-status');
-
-        btn.disabled = true;
-        btn.textContent = "Подключаем...";
-        status.textContent = "";
-
-        try {
-            const registration = await navigator.serviceWorker.register('/sw.js');
-            await registration.update();
-
-            if (registration.active) {
-                console.log('Service Worker активен');
-            } else {
-                await new Promise(resolve => {
-                    registration.addEventListener('activate', () => resolve());
-                });
-            }
-
-            const permission = await Notification.requestPermission();
-            if (permission !== 'granted') {
-                status.textContent = "Уведомления отклонены";
-                resetButton();
-                return;
-            }
-
-            const subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: vapidPublicKey
-            });
-
-            console.log('Подписка создана:', subscription);
-            status.innerHTML = `✅ Уведомления включены!<br>Вы будете получать новости о курсах.`;
-            btn.style.display = 'none';
-
-        } catch (error) {
-            console.error('Ошибка:', error);
-            status.textContent = "Ошибка: " + (error.message || error);
-            resetButton();
-        }
-    }
-
-    function resetButton() {
-        const btn = document.getElementById('notify-btn');
-        if (btn) {
-            btn.textContent = "Включить уведомления";
-            btn.disabled = false;
-        }
-    }
-
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(reg => console.log('SW зарегистрирован:', reg))
-                .catch(err => console.log('SW ошибка:', err));
+    // Фильтрация советов по категориям
+    function filterTips(category) {
+        // Меняем активный класс у кнопок
+        const buttons = document.querySelectorAll('#filter-container button');
+        buttons.forEach(btn => {
+            btn.classList.remove('active', 'bg-[#0f766e]', 'text-white');
+            btn.classList.add('bg-white', 'text-gray-900');
         });
+        
+        // Находим нажатую кнопку и активируем ее
+        const eventBtn = event.currentTarget;
+        eventBtn.classList.remove('bg-white', 'text-gray-900');
+        eventBtn.classList.add('active', 'bg-[#0f766e]', 'text-white');
+        
+        // Фильтруем карточки
+        const cards = document.querySelectorAll('#tips-grid .tip-card');
+        cards.forEach(card => {
+            if (category === 'all' || card.getAttribute('data-category') === category) {
+                card.style.display = 'block';
+                // Плавное появление
+                setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Раскрытие аккордеона на карточке совета
+    function toggleAccordion(button) {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector('.rotate-icon');
+        
+        content.classList.toggle('open');
+        icon.classList.toggle('open');
+        
+        if (content.classList.contains('open')) {
+            content.style.maxHeight = content.scrollHeight + "px";
+            button.querySelector('span').textContent = "Скрыть разбор";
+        } else {
+            content.style.maxHeight = "0px";
+            button.querySelector('span').textContent = "Читать разбор полностью";
+        }
+    }
+
+    // Интерактивный Блиц-тест
+    function toggleQuiz(element) {
+        const answer = element.querySelector('.quiz-answer');
+        const icon = element.querySelector('.quiz-icon');
+        
+        answer.classList.toggle('hidden');
+        
+        if (answer.classList.contains('hidden')) {
+            icon.textContent = '+';
+            icon.style.color = '#f88c74';
+        } else {
+            icon.textContent = '−';
+            icon.style.color = '#0f766e';
+        }
     }
 </script>
 </body>
 </html>
+
+```
